@@ -149,16 +149,13 @@ Result of query:
 20. Show the department hierarchy as a tree structure.
 
 ~~~~sql
-SELECT DeptID, 
-       DeptName, 
-       LEVEL AS DeptLevel, 
-       SYS_CONNECT_BY_PATH(DeptName, ' -> ') AS Hierarchy
-FROM Department
-START WITH ParentDeptID IS NULL 
-CONNECT BY PRIOR DeptID = ParentDeptID
-ORDER SIBLINGS BY DeptName;
+SELECT DEPTID, DEPTNAME, PARENTDEPTID,
+       LEVEL AS DEPTLEVEL,
+       SYS_CONNECT_BY_PATH(DEPTNAME, ' -> ') AS HIERARCHY
+FROM department
+START WITH PARENTDEPTID IS NULL
+CONNECT BY PRIOR DEPTID = PARENTDEPTID;
 ~~~~
 Result of query: 
-![alt text](<images 2/20.1.png>)
-![alt text](<images 2/20.2.png>)
-17 rows returned.
+![alt text](<images 2/20.png>)
+10 rows returned.
